@@ -1,9 +1,7 @@
 <?php
-
 function formApply(){
 
   $to = 'onyx18121990@gmail.com';
-  $from = 'max.globa.1990@ya.ru';
 
   $subject = 'Eye health Apply Now form';
 
@@ -14,23 +12,26 @@ function formApply(){
     <p>Position: '.$_POST['position'].'</p>
   ';
 
-  $attachments = array($_POST['attached_cv']);
+  // $attachments = array($_POST['attached_cv']);
+  $attachments = array('http://theeyehealthgroup.com/wp-content/themes/mg-theme/uploads/test.pdf');
 
-  $headers =  'From: '. $from . "\r\n" .
-              'Reply-To: ' . $_POST['email'] . "\r\n";
+  $headers =  'Reply-To: ' . $_POST['email'] . "\r\n" .
+              'Content-Type: text/html; charset=UTF-8';
 
   $send_email = wp_mail( $to, $subject, $message, $headers, $attachments);
 
   if( $send_email ){
     $response = [
       'status' => 'success',
-      'msg' => 'Thank you! Your message was sent, we will contact you shortly.'
+      'msg' => 'Thank you! Your message was sent, we will contact you shortly.',
+      'atm' => json_encode($attachments),
     ];
   } else {
     $response = [
       'status' => 'error',
       'msg' => 'Oops, Error! Something went wrong, please reload page and try againe.',
-      'data' => json_encode($send_email)
+      'data' => json_encode($send_email),
+      'atm' => json_encode($attachments),
     ];
   }
 

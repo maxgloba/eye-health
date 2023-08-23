@@ -22,7 +22,7 @@ var tns=function(){Object.keys||(Object.keys=function(t){var e=[];for(var n in t
         location = window.location.href,
         slug = url => {
           const linksArr = new URL(url).pathname.match(/[^\/]+/g)
-          return linksArr[linksArr.length - 1]
+          return linksArr ? linksArr[0] : ''
         }
 
   headerLinks.forEach(link => {
@@ -46,13 +46,33 @@ var tns=function(){Object.keys||(Object.keys=function(t){var e=[];for(var n in t
 (function(){
 
   const waitingItems = document.querySelectorAll('.waiting__item'),
+        waitingAreas = document.querySelectorAll('.waiting__area'),
+        waitingActives = document.querySelectorAll('.waiting__active'),
         nyStates = document.querySelectorAll('.ny_states')
   waitingItems.forEach(item => {
     item.addEventListener('click', e => {
-      e.preventDefault();
+      // e.preventDefault();
       waitingItems.forEach(el => el.classList.remove('active'))
-      nyStates.forEach(el => el.classList.remove('active'))
-      document.getElementById(e.target.dataset.state).classList.add('active')
+      waitingAreas.forEach(el => el.classList.remove('active'))
+      waitingActives.forEach(el => el.classList.remove('active'))
+
+      e.target.classList.add('active')
+      document.querySelector(`.${ e.target.dataset.state }__active`).classList.add('active')
+      document.querySelector(`.${ e.target.dataset.state }__area`).classList.add('active')
+    })
+  })
+
+  const tabNavs = document.querySelectorAll('.waiting__nav-btn'),
+        maps = document.querySelectorAll('.waiting__map svg'),
+        lists = document.querySelectorAll('.waiting__list')
+  tabNavs.forEach(navBtn => {
+    navBtn.addEventListener('click', e => {
+      e.preventDefault()
+      tabNavs.forEach(el => el.classList.remove('active'))
+      maps.forEach(el => el.style.display = 'none')
+      lists.forEach(el => el.style.display = 'none')
+      document.getElementById(e.target.dataset.map).style.display = 'block'
+      document.querySelector('.waiting__list__'+e.target.dataset.map).style.display = 'block'
       e.target.classList.add('active')
     })
   })
@@ -97,7 +117,7 @@ var tns=function(){Object.keys||(Object.keys=function(t){var e=[];for(var n in t
         links = document.querySelectorAll('.link-page'),
         eyeOpening = () => {
           eye.classList.add('eye__opening')
-          setTimeout(() => eyeOpened(), 1000)
+          setTimeout(() => eyeOpened(), 250)
         },
         eyeOpened = () => {
           eye.classList.remove('eye__opening')
@@ -105,10 +125,10 @@ var tns=function(){Object.keys||(Object.keys=function(t){var e=[];for(var n in t
         },
         eyeClose = url => {
           eye.classList.remove('eye__opened')
-          setTimeout(() => location.href = url+window.location.search, 1000)
+          setTimeout(() => location.href = url+window.location.search, 250)
         }
 
-  setTimeout(() => eyeOpening(), 100)
+  setTimeout(() => eyeOpening(), 50)
   links.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault()

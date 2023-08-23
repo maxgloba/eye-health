@@ -21,7 +21,7 @@
         location = window.location.href,
         slug = url => {
           const linksArr = new URL(url).pathname.match(/[^\/]+/g)
-          return linksArr[linksArr.length - 1]
+          return linksArr ? linksArr[0] : ''
         }
 
   headerLinks.forEach(link => {

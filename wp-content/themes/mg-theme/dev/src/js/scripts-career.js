@@ -16,10 +16,12 @@
       position: document.getElementById('position').value,
       attached_cv: document.getElementById('attached_cv').value,
     }]
+    console.log(document.getElementById('attached_cv').value)
     requestAction(requestCheckout, result => {
       let data = JSON.parse(result)
       if(data.status == 'success'){
         alert(data.msg)
+        console.dir(data);
         e.target.reset()
       } else if(data.status == 'error'){
         alert(data.msg)

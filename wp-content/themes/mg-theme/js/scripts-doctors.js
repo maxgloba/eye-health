@@ -21,7 +21,7 @@
         location = window.location.href,
         slug = url => {
           const linksArr = new URL(url).pathname.match(/[^\/]+/g)
-          return linksArr[linksArr.length - 1]
+          return linksArr ? linksArr[0] : ''
         }
 
   headerLinks.forEach(link => {
@@ -77,7 +77,7 @@ function requestAction(values, callback){
         links = document.querySelectorAll('.link-page'),
         eyeOpening = () => {
           eye.classList.add('eye__opening')
-          setTimeout(() => eyeOpened(), 1000)
+          setTimeout(() => eyeOpened(), 250)
         },
         eyeOpened = () => {
           eye.classList.remove('eye__opening')
@@ -85,10 +85,10 @@ function requestAction(values, callback){
         },
         eyeClose = url => {
           eye.classList.remove('eye__opened')
-          setTimeout(() => location.href = url+window.location.search, 1000)
+          setTimeout(() => location.href = url+window.location.search, 250)
         }
 
-  setTimeout(() => eyeOpening(), 100)
+  setTimeout(() => eyeOpening(), 50)
   links.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault()

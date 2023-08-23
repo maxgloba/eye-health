@@ -1,18 +1,26 @@
+<?php
+  $args = array(
+    'post_type' => 'cpt_hiring',
+    'posts_per_page' => -1
+  );
+  $the_query = new WP_Query( $args );
+?>
 <section class="form">
   <div class="container">
     <div class="form__wrap">
       <h2>APPLY <b>NOW!</b></h2>
       <div class="row">
         <img src="<?php echo IMG; ?>/apply.jpg" class="col__order-2">
-        <form class="form__apply" enctype="multipart/form-data" >
+        <div class="form__inner">
+          <?php echo do_shortcode('[contact-form-7 id="240a385" title="Hiring"]'); ?>
+        </div>
+        <!-- <form class="form__apply" enctype="multipart/form-data" >
           <div class="field">
             <select name="position" id="position" placeholder="POSITION" required>
               <option selected disabled>CHOOSE POSITION</option>
-              <?php if( have_rows('hiring_list') ): ?>
-              <?php while( have_rows('hiring_list') ) : the_row(); ?>
-                <option value="<?php the_sub_field('title'); ?>"><?php the_sub_field('title'); ?></option>
+              <?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
+                <option value="<?php the_title(); ?>"><?php the_title(); ?></option>
               <?php endwhile; ?>
-              <?php endif; ?>
             </select>
           </div>
           <div class="field">
@@ -31,7 +39,7 @@
           <div class="field">
             <input type="submit" value="submit">
           </div>
-        </form>
+        </form> -->
       </div>
     </div>
   </div>
